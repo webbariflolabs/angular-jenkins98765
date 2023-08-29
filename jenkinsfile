@@ -1,33 +1,27 @@
 pipeline {
     agent any
-
-    environment {
+    
+     environment {
         NODEJS_HOME = tool name: 'nodejs', type: 'NodeJS'
         PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout SCM') {
             steps {
                 checkout scm
             }
         }
-        
-        stage('Install Dependencies') {
+
+        stage('Build and Deploy') {
+            environment {
+                NODEJS_HOME = tool name: 'YourNodeJSInstallationName', type: 'NodeJS'
+                PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
+            }
             steps {
                 sh 'npm install'
-            }
-        }
-
-        stage('Build') {
-            steps {
                 sh 'npm run build'
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                sh 'rsync -avz dist/ user@server:/path/to/destination'
+                // Add deployment steps here
             }
         }
     }
