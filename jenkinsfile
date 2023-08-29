@@ -2,27 +2,35 @@ pipeline {
     agent any
     
      environment {
-        NODEJS_HOME = tool name: 'nodejs', type: 'NodeJS'
+        NODEJS_HOME = tool name: 'Nodejs', type: 'NodeJS'
         PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
     }
-
     stages {
-        stage('Checkout SCM') {
+        stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Build and Deploy') {
-            environment {
-                NODEJS_HOME = tool name: 'YourNodeJSInstallationName', type: 'NodeJS'
-                PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
-            }
+        stage('Install Dependencies') {
             steps {
                 sh 'npm install'
-                sh 'npm run build'
-                // Add deployment steps here
             }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build successful! Artifacts ready for deployment.'
+        }
+        failure {
+            echo 'Build failed. Check logs for details.'
         }
     }
 }
