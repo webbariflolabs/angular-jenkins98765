@@ -1,34 +1,34 @@
-node(){
-  stage('Cloning Git') {
-    checkout scm
-  }
+pipeline {
+    agent any
 
-  stage('Install dependencies') {
-    nodejs('nodejs') {
-      sh 'npm install'
-      
+    environment {
+        NODEJS_HOME = tool name: 'nodejs', type: 'NodeJS'
+        PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
     }
-  }
-  stage('Build') {
-    nodejs('nodejs') {
-      sh 'npm run build'
-      echo "Build completed"
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sh 'rsync -avz dist/ user@server:/path/to/destination'
+            }
+        }
     }
-  }
-
-  stage('package Build') {
-    sh "tar -zcvf bundle.tar.gz dist/iot/"
-  }
-
-  stage('Artifacts Creation') {
-    fingerprint 'bundle.tar.gz'
-    archiveArtifacts 'bundle.tar.gz'
-    echo "artifacts created"
-  }
-
-  stage('stash changes') {
-    stash allowEmpty: true, includes: 'bundle.tar.gz', name: 'buildArtifacts'
-  }
-
 }
-
