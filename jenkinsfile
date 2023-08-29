@@ -3,7 +3,7 @@ pipeline {
     
     environment {
     NODEJS_HOME = tool name: 'NodeJS-20.5.1', type: 'NodeJS'
-    PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
+    PATH = "C:/Program Files/nodejs"
 }
     stages {
         stage('Checkout') {
