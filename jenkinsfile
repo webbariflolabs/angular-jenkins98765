@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-    NODEJS_HOME = tool name: 'NodeJS-20.5.1', type: 'NodeJS'
+    
     PATH = "C:/Program Files/nodejs"
 }
     stages {
@@ -14,9 +14,9 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                 nodejs('NodeJS-20.5.1') {
+                 
                     sh 'npm install'
-                }
+                
             }
         }
 
