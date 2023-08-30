@@ -15,13 +15,13 @@ pipeline {
 
         stage('NPM Setup') {
             steps {   
-                    sh 'npm install'                
-            }
+                  nodejs 'npm install'                
+                 }
         }
 
         stage('Build') {
             steps {
-                sh 'npm run ng --build'
+                nodejs 'npm run ng -- build'
 
             }
         }
