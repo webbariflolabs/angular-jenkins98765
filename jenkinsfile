@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '27d786be-2dc9-480c-9e2e-ffffaab3af25', url: 'git@github.com:webbariflolabs/angular-iot22.git']])
             }
         }
 
