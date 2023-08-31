@@ -23,7 +23,7 @@ import { DeviceAssignControlsComponent } from './device-assign-controls/device-a
 import { DeviceStatsComponent } from './device-stats/device-stats.component';
 
 const routes: Routes = [
-  {path:'login',component:LoginComponent},
+  {path:'',component:LoginComponent},
   {path:'dashboard',component:DashboardComponent},
   {
     path: 'dashboard-dialog',
