@@ -7,3 +7,4 @@ RUN npm run build
 # Stage 2: Create the production image
 FROM nginx:alpine
 COPY --from=node /app/dist/iot /usr/share/nginx/html
+  
